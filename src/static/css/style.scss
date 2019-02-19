@@ -1,0 +1,14 @@
+.headerNav{
+    border-bottom:1px solid #ddd;
+    padding:10px;
+    &_span{
+        margin:0px 10px;
+        cursor:pointer;
+        &:hover{
+            color:green;
+        }
+    }
+    .showMenu{
+        color:green;
+    }
+}
