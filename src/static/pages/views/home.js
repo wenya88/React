@@ -6,9 +6,10 @@ import { addOther } from '../../../redux/actions/otherActions';
 
 class Home extends Component {
 
- componentDidMount(){
+  handlerAddRedux(){
     this.props.addOther();
- }
+  }
+
   render() {
     const otherData=this.props.other.map((item,index)=>(
         <div key={index}>
@@ -17,7 +18,9 @@ class Home extends Component {
     ))
     return (
       <div>
-          {otherData}
+         <button onClick={this.handlerAddRedux.bind(this)}>添加redux</button>
+         {otherData}
+         
       </div>
     )
   }

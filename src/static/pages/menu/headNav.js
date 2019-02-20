@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
  class HeadNav extends Component {
   constructor(props){
@@ -9,7 +10,8 @@ import { Link } from 'react-router-dom'
               {name:"首页",value:"home"},
               {name:"其他",value:"other"}
           ],
-          nIndex:0
+          nIndex:0,
+          otherData:[]
       }
   }
 
@@ -23,23 +25,45 @@ import { Link } from 'react-router-dom'
           return index;
       })
   }
+  
+//   获取最新props值
+  componentWillReceiveProps(nextProps){
+      this.setState({
+        otherData:nextProps.other
+      },_=>{
+        console.log(this.state.otherData)
+      })
+      
+  }
 
   handlerNindex(res){
      this.setState({nIndex:res.n})     
   }
 
   render() {
-    const {menuData,nIndex} = this.state;
+    const {menuData,nIndex,otherData} = this.state;
     const menu=menuData.map((item,index)=>(
         <span key={index} onClick={this.handlerNindex.bind(this,{n:index,val:item.value})}>
             <Link to={`/index/${item.value}`} className={index===nIndex?"headerNav_span showMenu":"headerNav_span"}>{item.name}</Link>
         </span>
     ))
+    const other=otherData.map((item,index)=>(
+        <div key={index}>
+            reduxName:{item.name}
+        </div>
+    ))
     return (
-      <div className="headerNav">
-          {menu}
-      </div>
+        <div>
+            <div className="headerNav">
+                {menu}
+            </div>
+            {other}
+        </div>
+      
     )
   }
 }
-export default HeadNav;
+const mapState=state=>({
+    other:state.other.items
+})
+export default connect(mapState)(HeadNav);
